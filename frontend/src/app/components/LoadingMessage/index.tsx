@@ -11,7 +11,7 @@ export namespace LoadingMessage {
 export class LoadingMessage extends Component<LoadingMessage.Props> {
   render() {
     return (
-      <div className={style.loading}>
+      <div classNames={style.loading}>
         <span>{this.props.message}</span>
       </div>
     );
