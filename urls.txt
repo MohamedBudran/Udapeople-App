@@ -1,0 +1,5 @@
+URL01 = https://github.com/MohamedBudran/Udapeople-App     NOTE:Public Url to GitHub repository
+URL02 =                                                    NOTE:Public URL for your S3 Bucket (aka, your green candidate front-end)
+URL03 =                                                    NOTE:Public URL for your CloudFront distribution
+URL04 =                                                    NOTE:Public URLs to deployed application back-end in EC2
+URL05 =                                                    NOTE:Public URL to your Prometheus Server
