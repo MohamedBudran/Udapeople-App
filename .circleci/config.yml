@@ -182,9 +182,10 @@ jobs:
             echo "$BACKEND_AWS_PUBLIC_IP" >> .circleci/ansible/inventory.txt
             cat .circleci/ansible/inventory.txt   
       - persist_to_workspace:
-          root: ~/
+          #root: ~/
+          root: E:\aws\aws2
           paths:
-            - project/.circleci/ansible/inventory.txt
+            - Udapeople-App/.circleci/ansible/inventory.txt
       # Here's where you will add some code to rollback on failure      
 
 #   configure-infrastructure:
