@@ -196,7 +196,7 @@ jobs:
 
   configure-infrastructure:
     docker:
-      - image: cimg/base:2022.08
+      - image: cimg/aws:2022.06 
     steps:
       - checkout
       - install_ansible
@@ -217,22 +217,22 @@ jobs:
             ansible-playbook -i inventory.txt configure-server.yml
       - destroy-environment     
 
-#   run-migrations:
-#     docker:
-#       # Docker image here that supports NodeJS
-#     steps:
-#       # Checkout code from git
-#       - run:
-#           name: Run migrations
-#           command: |
-#             # Your code here
-#             exit 1
-#       - run:
-#           name: Send migration results to memstash
-#           command: |
-#             # Your code here
-#             exit 1
-#      # Here's where you will add some code to rollback on failure      
+  run-migrations:
+    docker:
+      # Docker image here that supports NodeJS
+    steps:
+      # Checkout code from git
+      - run:
+          name: Run migrations
+          command: |
+            # Your code here
+            exit 1
+      - run:
+          name: Send migration results to memstash
+          command: |
+            # Your code here
+            exit 1
+     # Here's where you will add some code to rollback on failure      
 
 #   deploy-frontend:
 #     docker:
@@ -350,8 +350,8 @@ workflows:
               only: [master]
       - configure-infrastructure:
           requires: [deploy-infrastructure]
-      # - run-migrations:
-      #     requires: [configure-infrastructure]
+      - run-migrations:
+          requires: [configure-infrastructure]
       # - deploy-frontend:
       #     requires: [run-migrations]
       # - deploy-backend:
