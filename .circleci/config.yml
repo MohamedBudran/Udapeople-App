@@ -62,7 +62,7 @@ commands:
           # Add when this will run
           when: on_fail
           command: |
-            SUCCESS=$(curl --insecure https://kvdb.io/${kvdb}/migration_${CIRCLE_WORKFLOW_ID:0:7}
+            SUCCESS=$(curl --insecure https://kvdb.io/${kvdb_bucket}/migration_${CIRCLE_WORKFLOW_ID:0:7}
             SUCCESS = 1
             if(( $SUCCESS==1 )); 
             then
