@@ -52,24 +52,24 @@ commands:
             aws s3 rb s3://udapeople-<<parameters.workflow_id>> --force
             aws cloudformation delete-stack --stack-name Udapeople-App-FE-<<parameters.workflow_id>> 
 
-#   revert-migrations:
-#     description: Revert the last migration if successfully run in the current workflow.
-#     parameters:
-#       # Add parameter here     
-#     steps:
-#       - run:
-#           name: Revert migrations
-#           # Add when this will run
-#           command: |
-#             # Curl command here to see if there was a successful migration associated with the workflow id, store result in SUCCESS variable
-#             SUCCESS = 1
-#             if(( $SUCCESS==1 )); 
-#             then
-#             #  cd ~/project/backend
-#             #  npm install
-#             #  Add revert code here. You can find this in the Getting Started section.
-#               exit 1
-#             fi
+  revert-migrations:
+    description: Revert the last migration if successfully run in the current workflow.
+    parameters:
+      # Add parameter here     
+    steps:
+      - run:
+          name: Revert migrations
+          # Add when this will run
+          when: on_fail
+          command: |
+            SUCCESS=$(curl --insecure https://kvdb.io/${kvdb}/migration_<< parameters.workflow_id>>)
+            SUCCESS = 1
+            if(( $SUCCESS==1 )); 
+            then
+              cd ~/project/backend
+              npm install
+              npm run migration:revert
+            fi
 
             
 jobs:
@@ -252,7 +252,7 @@ jobs:
             then
               curl https://kvdb.io/${kvdb_bucket}/migration_${CIRCLE_WORKFLOW_ID:0:7} -d '3'
             fi
-      - destroy_environment
+      - destroy-environment
       - revert_migrations    
 
 #   deploy-frontend:
