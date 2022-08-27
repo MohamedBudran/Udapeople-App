@@ -32,6 +32,7 @@ commands:
             sudo mv node-v13.14.0-linux-x64 /opt/
             sudo ln -s /opt/node-v13.14.0-linux-x64/bin/npm /usr/bin/npm
             sudo ln -s /opt/node-v13.14.0-linux-x64/bin/node /usr/bin/node
+            sudo ln -s /opt/node-v13.14.0-linux-x64/bin/npx /usr/bin/npx
       
 
   destroy-environment:
