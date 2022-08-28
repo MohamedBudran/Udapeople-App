@@ -271,10 +271,10 @@ jobs:
 
   deploy-frontend:
     docker:
-      - image: cimg/aws:2022.06
+      - image: cimg/node:13.8.0
     steps:
       - checkout
-      - install_nodejs13
+      - install_awscli
       - restore_cache:
          keys: [frontend-build]
       - run:
@@ -305,10 +305,9 @@ jobs:
                     
   deploy-backend:
     docker:
-      - image: cimg/aws:2022.06
+      - image: cimg/node:13.8.0
     steps:
       - checkout
-      - install_nodejs13
       - install_ansible
       - add_ssh_keys:
           fingerprints: ["a7:ee:42:9a:9a:f5:5a:09:4e:1f:0c:94:64:ec:f4:fa"]
