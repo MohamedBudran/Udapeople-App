@@ -3,14 +3,14 @@
 #   shell: |
 #     curl -sL https://deb.nodesource.com/setup_13.x | sudo -E bash -
 #     curl -sL https://deb.nodesource.com/node_13.x/dists/jammy/Release | sudo -E bash -
-- name: "Add Node.js from nodejs"
-  become: true
-  shell: |
-    curl -O https://nodejs.org/download/release/v13.14.0/node-v13.14.0-linux-x64.tar.gz
-    tar -xzf node-v13.14.0-linux-x64.tar.gz
-    sudo mv node-v13.14.0-linux-x64 /opt/
-    sudo ln -s /opt/node-v13.14.0-linux-x64/bin/npm /usr/bin/npm
-    sudo ln -s /opt/node-v13.14.0-linux-x64/bin/node /usr/bin/node
+# - name: "Add Node.js from nodejs"
+#   become: true
+#   shell: |
+#     curl -O https://nodejs.org/download/release/v13.14.0/node-v13.14.0-linux-x64.tar.gz
+#     tar -xzf node-v13.14.0-linux-x64.tar.gz
+#     sudo mv node-v13.14.0-linux-x64 /opt/
+#     sudo ln -s /opt/node-v13.14.0-linux-x64/bin/npm /usr/bin/npm
+#     sudo ln -s /opt/node-v13.14.0-linux-x64/bin/node /usr/bin/node
     
 
 
