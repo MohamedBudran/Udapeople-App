@@ -20,7 +20,7 @@ commands:
             sudo apt update
             sudo apt install software-properties-common
             sudo add-apt-repository --yes --update ppa:ansible/ansible
-            sudo apt install ansible -y
+            yes | sudo apt install ansible 
   install_nodejs13:
     description: install nodejs13
     steps:
@@ -308,6 +308,7 @@ jobs:
       - image: cimg/node:13.8.0
     steps:
       - checkout
+      - install_awscli
       - install_ansible
       - add_ssh_keys:
           fingerprints: ["a7:ee:42:9a:9a:f5:5a:09:4e:1f:0c:94:64:ec:f4:fa"]
