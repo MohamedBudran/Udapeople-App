@@ -77,7 +77,6 @@ commands:
           when: on_fail
           command: |
             SUCCESS=$(curl --insecure https://kvdb.io/${kvdb_bucket}/migration_${CIRCLE_WORKFLOW_ID:0:7}
-            SUCCESS = 1
             if(( $SUCCESS==1 )); 
             then
               cd ~/project/backend
@@ -257,14 +256,14 @@ jobs:
 
   run-migrations:
     docker:
-      - image: circleci/node:13.8.0
+      - image: cimg/node:13.8.0
       #- image: cimg/aws:2022.06
     steps:
       - checkout
       #- install_nodejs13
-      - restore_cache:
-                keys: [backend-build]
       - install_awscli
+      - restore_cache:
+          keys: [backend-build]
       - run:
           name: Run migrations
           command: |
@@ -283,7 +282,7 @@ jobs:
           command: |
             if grep -q "has been executed successfully." ~/project/backend/migration_FILE.txt
             then
-              curl https://kvdb.io/${kvdb_bucket}/migration_${CIRCLE_WORKFLOW_ID:0:7} -d '1'
+              curl https://kvdb.io/${kvdb_bucket}/migration_${CIRCLE_WORKFLOW_ID:0:7} -d '3'
               echo "migration complete -------"
             else                                     
                 echo "no migration happened"
