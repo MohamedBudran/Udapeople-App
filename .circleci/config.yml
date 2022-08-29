@@ -269,9 +269,10 @@ jobs:
           name: Run migrations
           command: |
             cd backend
-            npm install typescript
             npm run migrations > migration_FILE.txt
-            cat migration_FILE.txt   
+            cat migration_FILE.txt  
+    #              npm install typescript
+ 
       # - run:
       #     name: Send migration results to memstash
       #     command: |
