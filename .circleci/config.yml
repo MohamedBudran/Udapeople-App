@@ -121,6 +121,10 @@ jobs:
       - save_cache:
           paths: [backend/node_modules]
           key: backend-build
+      - persist_to_workspace:                    # added 
+          root: ~/
+          paths:
+              - project/backend/dist
       - notify_at_failure
 
   test-frontend:
@@ -149,8 +153,7 @@ jobs:
           command: |
              cd backend
              npm install 
-             npm test 
-            
+             npm test           
   scan-frontend:
     docker:
       - image: cimg/node:13.8.0  # executer docker image,you can use windows,mac,linux
@@ -165,7 +168,6 @@ jobs:
              npm install 
              npm audit fix --force --audit-level=critical
              npm audit --audit-level=critical
-
   scan-backend:
     docker:
       - image: cimg/node:13.8.0  # executer docker image,you can use windows,mac,linux
@@ -181,12 +183,17 @@ jobs:
              npm audit fix --force --audit-level=critical
              npm audit fix --force --audit-level=critical
              npm audit --audit-level=critical
-
   deploy-infrastructure:
     docker:
-      - image: cimg/aws:2022.06
+      - image: python:3.7-alpine
+      #- image: cimg/aws:2022.06
     steps:
       - checkout
+      - run:                                           #added
+          name: Install dependencies
+          command: |
+              apk add --update tar gzip curl
+              pip install awscli
       - run:
           name: Ensure back-end infrastructure exists
           command: |
@@ -217,14 +224,20 @@ jobs:
           paths:
             - project/.circleci/ansible/inventory.txt
       - destroy-environment
-
-
   configure-infrastructure:
     docker:
-      - image: cimg/aws:2022.06 
+      - image: python:3.7-alpine
+        environment:
+          ANSIBLE_HOST_KEY_CHECKING: "no"
+      #- image: cimg/aws:2022.06 
     steps:
       - checkout
-      - install_ansible
+      #- install_ansible
+      - run:
+          name: Install config dependencies
+          command: |
+              apk add --update tar gzip curl nodejs npm ansible zip
+              pip install awscli
       - add_ssh_keys:
           fingerprints: ["a7:ee:42:9a:9a:f5:5a:09:4e:1f:0c:94:64:ec:f4:fa"]
       
@@ -244,10 +257,14 @@ jobs:
 
   run-migrations:
     docker:
-      - image: cimg/aws:2022.06
+      - image: circleci/node:13.8.0
+      #- image: cimg/aws:2022.06
     steps:
       - checkout
-      - install_nodejs13
+      #- install_nodejs13
+      - restore_cache:
+                keys: [backend-build]
+      - install_awscli
       - run:
           name: Run migrations
           command: |
@@ -265,7 +282,10 @@ jobs:
           command: |
             if grep -q "has been executed successfully." ~/project/backend/migration_FILE.txt
             then
-              curl https://kvdb.io/${kvdb_bucket}/migration_${CIRCLE_WORKFLOW_ID:0:7} -d '3'
+              curl https://kvdb.io/${kvdb_bucket}/migration_${CIRCLE_WORKFLOW_ID:0:7} -d '1'
+              echo "migration complete -------"
+            else                                     
+                echo "no migration happened"
             fi
       - destroy-environment
       - revert-migrations    
@@ -342,8 +362,7 @@ jobs:
             ansible-playbook -i inventory.txt deploy-backend.yml 
       # Here's where you will add some code to rollback on failure  
       - destroy-environment
-      - revert-migrations    
-      
+      - revert-migrations        
   smoke-test:
     docker:
       - image: cimg/aws:2022.06
@@ -351,7 +370,6 @@ jobs:
       - checkout
       - install_ansible
       - install_nodejs13
-
       # - run:
       #     name: Install dependencies
       #     command: |
@@ -424,8 +442,6 @@ jobs:
 #             then
 #               # your code here
 #             fi
-            
-
 workflows:
   default:
     jobs:
