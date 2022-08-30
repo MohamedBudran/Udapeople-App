@@ -28,9 +28,7 @@
     sudo mkdir -p /usr/local/lib/nodejs
     sudo tar -xvf node-v13.8.0-linux-x64.tar.gz -C /usr/local/lib/nodejs 
     export PATH=/usr/local/lib/nodejs/node-v13.8.0-linux-x64/bin:$PATH
-    . ~/.profile
-    
-
+    sudo . ~/.profile
 
 - name: "Install PM2 Globally"
   npm:
