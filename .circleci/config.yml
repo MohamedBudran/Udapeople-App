@@ -255,19 +255,18 @@ jobs:
 
   run-migrations:
     docker:
-      - image: cimg/node:13.8.0
-      #- image: cimg/aws:2022.06
+      # - image: cimg/node:13.8.0
+      - image: cimg/aws:2022.06
     steps:
       - checkout
-      #- install_nodejs13
-      - install_awscli
+      - install_nodejs13
+      # - install_awscli
       # - restore_cache:
       #     keys: [backend-build]
       - run:
           name: Run migrations
           command: |
             cd backend
-            npm install
             npm install typescript
             npm run migrations > migration_FILE.txt
             cat migration_FILE.txt  
