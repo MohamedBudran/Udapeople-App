@@ -267,14 +267,14 @@ jobs:
           name: Run migrations
           command: |
             cd backend
-            npm cache clean --force
-            rm -rf node_modules
-            rm package-lock.json
             npm install
+            npm install typescript
             npm run migrations > migration_FILE.txt
             cat migration_FILE.txt  
     #              npm install typescript
- 
+#  npm cache clean --force
+#             rm -rf node_modules
+#             rm package-lock.json
       # - run:
       #     name: Send migration results to memstash
       #     command: |
