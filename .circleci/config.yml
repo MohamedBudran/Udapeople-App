@@ -105,9 +105,11 @@ jobs:
 
   build-backend:
     docker:
-      - image: cimg/node:13.8.0
+      - image: cimg/base:stable
+      # - image: cimg/node:13.8.0
     steps:
       - checkout
+      - install_nodejs13
       - restore_cache:
           keys: [backend-build]
       - run:
@@ -122,7 +124,7 @@ jobs:
       - persist_to_workspace:                    # added 
           root: ~/
           paths:
-              - project/backend/dist
+            - project/backend/dist
       - notify_at_failure
 
   test-frontend:
