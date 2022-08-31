@@ -31,10 +31,10 @@
     . ~/.profile
     sudo ln -s /usr/local/lib/nodejs/node-v13.8.0-linux-x64/bin/npm /usr/bin/npm
     sudo ln -s /usr/local/lib/nodejs/node-v13.8.0-linux-x64/bin/node /usr/bin/node
+    sudo ln -s /usr/local/lib/nodejs/node-v13.8.0-linux-x64/bin/npx /usr/bin/npx
 
 - name: "Install PM2 Globally"
   npm:
     name: pm2
     global: yes
     production: yes
-    
