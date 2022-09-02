@@ -9,20 +9,20 @@
     dest: ~/backend-app
     # remote_src: yes  #added
 
-- name: Installing node dependencies
-  shell: |
-    cd ~/backend-app
-    npm install
-- name: "Execute backend app with PM2"
-  shell: |
-    cd ~/backend-app/dist
-    npx pm2 stop default
-    npx pm2 start main.js
-  register: execute_node
+# - name: Installing node dependencies
+#   shell: |
+#     cd ~/backend-app
+#     npm install
+# - name: "Execute backend app with PM2"
+#   shell: |
+#     cd ~/backend-app/dist
+#     npx pm2 stop default
+#     npx pm2 start main.js
+#   register: execute_node
 
-- name: print output Of Execute backend app with PM2
-  debug:
-    msg: "{{execute_node.stdout_lines}}"
+# - name: print output Of Execute backend app with PM2
+#   debug:
+#     msg: "{{execute_node.stdout_lines}}"
 
 # - name: configure pm2 to start as service
 #   become: true
