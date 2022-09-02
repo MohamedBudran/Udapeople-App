@@ -318,7 +318,7 @@ jobs:
               --output text)
             export API_URL="http://${BACKEND_AWS_PUBLIC_IP}:3030"
             echo "${API_URL}"
-            echo "API_URL=http://${BACBACKEND_AWS_PUBLIC_IPKEND_IP}:3030" >> frontend/.env
+            echo "API_URL=http://${BACKEND_AWS_PUBLIC_IP}:3030" >> frontend/.env
             cat frontend/.env
       - run:
           name: Deploy frontend objects
@@ -369,6 +369,7 @@ jobs:
             echo "Contents  of the inventory.txt file is -------"
             cat inventory.txt
             ansible-playbook -i inventory.txt deploy-backend.yml 
+            sudo netstat -tulpn | grep 3030
       # Here's where you will add some code to rollback on failure  
       - destroy-environment
       - revert-migrations        
