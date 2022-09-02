@@ -13,7 +13,7 @@
   shell: |
     cd ~/backend-app
     npm install
-- name: Execute backend app with PM2
+- name: "Execute backend app with PM2"
   shell: |
     cd ~/backend-app/dist
     npx pm2 stop default
@@ -23,3 +23,8 @@
 - name: print output Of Execute backend app with PM2
   debug:
     msg: "{{execute_node.stdout_lines}}"
+
+- name: configure pm2 to start as service
+  become: true
+  shell: |
+    env PATH=$PATH:/usr/local/bin pm2 startup systemd -u ubuntu --hp /home/ubuntu
