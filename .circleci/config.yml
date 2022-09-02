@@ -80,6 +80,7 @@ commands:
             then
               cd ~/project/backend
               npm install
+              npm run build
               npm run migration:revert
             fi
 
