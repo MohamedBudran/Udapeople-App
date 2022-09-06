@@ -1,5 +1,5 @@
-import * as Joi from '@hapi/topo';
-// import * as Joi from '@hapi/joi';
+// import * as Joi from '@hapi/topo';
+import * as Joi from '@hapi/joi';
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 import { AboutInfo } from './about.interface';
 import { Product } from '../../modules/domain/orders/entities/product.entity';
