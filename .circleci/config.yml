@@ -88,7 +88,7 @@ commands:
 jobs:
   build-frontend: #job name
     docker:
-      - image: cimg/node:13.8.0  # executer docker image,you can use windows,mac,linux
+      - image: circleci/node:13.8.0  # executer docker image,you can use windows,mac,linux
     steps:
       - checkout                 #Built-in step at circleci to check source code
       - restore_cache:
@@ -106,11 +106,11 @@ jobs:
 
   build-backend:
     docker:
-      - image: cimg/base:stable
-      # - image: cimg/node:13.8.0
+      # - image: cimg/base:stable
+      - image: circleci/node:13.8.0
     steps:
       - checkout
-      - install_nodejs13
+      # - install_nodejs13
       - restore_cache:
           keys: [backend-build]
       - run:
