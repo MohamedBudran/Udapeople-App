@@ -22,16 +22,7 @@
     # TYPEORM_DATABASE: ${TYPEORM_DATABASE}
 
 
-  environment: 
-    -TYPEORM_CONNECTION: "{{lookup('env', 'TYPEORM_CONNECTION')}}"
-    -TYPEORM_MIGRATIONS_DIR: "{{lookup('env', 'TYPEORM_MIGRATIONS_DIR')}}"
-    -TYPEORM_ENTITIES: "{{lookup('env', 'TYPEORM_ENTITIES')}}"
-    -TYPEORM_MIGRATIONS: "{{lookup('env', 'TYPEORM_MIGRATIONS')}}"
-    -TYPEORM_HOST: "{{lookup('env', 'TYPEORM_HOST')}}"
-    -TYPEORM_PORT: "{{lookup('env', 'TYPEORM_PORT')}}"
-    -TYPEORM_USERNAME: "{{lookup('env', 'TYPEORM_USERNAME')}}"
-    -TYPEORM_PASSWORD: "{{lookup('env', 'TYPEORM_PASSWORD')}}"
-    -TYPEORM_DATABASE: "{{lookup('env', 'TYPEORM_DATABASE')}}"
+  
 
   pre_tasks:
     - name: "wait 350 seconds for target connection to become reachable/usable."
@@ -42,6 +33,17 @@
       become: true
       raw: test -e /usr/bin/python3 || (apt -y update && apt install -y python3)
       changed_when: false
+
+  environment: 
+    -TYPEORM_CONNECTION: "{{lookup('env', 'TYPEORM_CONNECTION')}}"
+    -TYPEORM_MIGRATIONS_DIR: "{{lookup('env', 'TYPEORM_MIGRATIONS_DIR')}}"
+    -TYPEORM_ENTITIES: "{{lookup('env', 'TYPEORM_ENTITIES')}}"
+    -TYPEORM_MIGRATIONS: "{{lookup('env', 'TYPEORM_MIGRATIONS')}}"
+    -TYPEORM_HOST: "{{lookup('env', 'TYPEORM_HOST')}}"
+    -TYPEORM_PORT: "{{lookup('env', 'TYPEORM_PORT')}}"
+    -TYPEORM_USERNAME: "{{lookup('env', 'TYPEORM_USERNAME')}}"
+    -TYPEORM_PASSWORD: "{{lookup('env', 'TYPEORM_PASSWORD')}}"
+    -TYPEORM_DATABASE: "{{lookup('env', 'TYPEORM_DATABASE')}}"
 
   roles:
     - deploy  
