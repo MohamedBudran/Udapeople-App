@@ -13,23 +13,23 @@
     ansible_stdout_callback: yaml
     os_environment:
       - key: TYPEORM_CONNECTION
-        value: "{{TYPEORM_CONNECTION}}"
+        value: postgres
       - key: TYPEORM_MIGRATIONS_DIR
-        value: "{{TYPEORM_MIGRATIONS_DIR}}"
+        value: ./src/migrations
       - key: TYPEORM_ENTITIES
-        value: "{{TYPEORM_ENTITIES}}"
+        value: ./modules/domain/**/*.entity{.ts,.js}
       - key: TYPEORM_MIGRATIONS
-        value: "{{TYPEORM_MIGRATIONS}}"
+        value: ./src/migrations/*.ts
       - key: TYPEORM_HOST
-        value: "{{TYPEORM_HOST}}"
+        value: uda-app-db.cbj8kutabusf.us-east-1.rds.amazonaws.com
       - key: TYPEORM_PORT
-        value: "{{TYPEORM_PORT}}"
+        value: 5432
       - key: TYPEORM_USERNAME
-        value: "{{TYPEORM_USERNAME}}"
+        value: postgres
       - key: TYPEORM_PASSWORD
-        value: "{{TYPEORM_PASSWORD}}"
+        value: 19281928
       - key: TYPEORM_DATABASE
-        value: "{{TYPEORM_DATABASE}}" 
+        value: glee 
 
   pre_tasks:
     - name: "wait 600 seconds for target connection to become reachable/usable."
