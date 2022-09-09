@@ -11,6 +11,25 @@
     ansible_python_interpreter: /usr/bin/python3
     ansible_host_key_checking: false
     ansible_stdout_callback: yaml
+    os_environment:
+      - key: TYPEORM_CONNECTION
+        value: ${TYPEORM_CONNECTION}
+      - key: TYPEORM_MIGRATIONS_DIR
+        value: ${TYPEORM_MIGRATIONS_DIR}
+      - key: TYPEORM_ENTITIES
+        value: ${TYPEORM_ENTITIES}
+      - key: TYPEORM_MIGRATIONS
+        value: ${TYPEORM_MIGRATIONS}
+      - key: TYPEORM_HOST
+        value: ${TYPEORM_HOST}
+      - key: TYPEORM_PORT
+        value: ${TYPEORM_PORT}
+      - key: TYPEORM_USERNAME
+        value: ${TYPEORM_USERNAME}
+      - key: TYPEORM_PASSWORD
+        value: ${TYPEORM_PASSWORD}
+      - key: TYPEORM_DATABASE
+        value: ${TYPEORM_DATABASE} 
 
   pre_tasks:
     - name: "wait 600 seconds for target connection to become reachable/usable."
@@ -27,6 +46,14 @@
   # environment:
   #   - TYPEORM_CONNECTION: "{{ lookup('env', 'TYPEORM_CONNECTION')}}"  
   #   # Add more env vars here
+  tasks:
+    - name: cutomize /etc/environment
+      ansible.builtin.lineinfile:
+        dest: "/etc/environment"
+        state: present
+        regexp: "^{{ item.key }}="
+        line: "{{ item.key }}={{ item.value }}"
+      with_items: "{{os_environment}}"
 
   roles:
     - configure-server
