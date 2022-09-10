@@ -27,7 +27,7 @@
     curl -O https://nodejs.org/download/release/v13.14.0/node-v13.14.0-linux-x64.tar.gz
     tar -xzf node-v13.14.0-linux-x64.tar.gz
     sudo mv node-v13.14.0-linux-x64 /opt/
-    echo "export PATH=/opt/node-v13.14.0-linux-x64/bin:$PATH" >> .profile
+    sudo echo "export PATH=/opt/node-v13.14.0-linux-x64/bin:$PATH" >> .profile
     . .profile
 # source ~/.profile
 
