@@ -21,12 +21,12 @@
     
   register: execute_node
 
-# - name: print output Of Execute backend app with PM2
-#   debug:
-#     msg: "{{execute_node.stdout_lines}}"
+- name: print output Of Execute backend app with PM2
+  debug:
+    msg: "{{execute_node.stdout_lines}}"
 # node main.js &
 #     disown
-# - name: configure pm2 to start as service
-#   become: true
-#   shell: |
-#     env PATH=$PATH:/usr/local/bin pm2 startup systemd -u ubuntu --hp /home/ubuntu
+- name: configure pm2 to start as service
+  become: true
+  shell: |
+    env PATH=$PATH:/usr/local/bin pm2 startup systemd -u ubuntu --hp /home/ubuntu
