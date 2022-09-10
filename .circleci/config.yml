@@ -30,9 +30,11 @@ commands:
             curl -O https://nodejs.org/download/release/v13.14.0/node-v13.14.0-linux-x64.tar.gz
             tar -xzf node-v13.14.0-linux-x64.tar.gz
             sudo mv node-v13.14.0-linux-x64 /opt/
-            sudo ln -s /opt/node-v13.14.0-linux-x64/bin/npm /usr/bin/npm
-            sudo ln -s /opt/node-v13.14.0-linux-x64/bin/node /usr/bin/node
-            sudo ln -s /opt/node-v13.14.0-linux-x64/bin/npx /usr/bin/npx
+            echo "export PATH=/opt/node-v13.14.0-linux-x64/bin:$PATH" >> .profile
+            source ~/.profile
+    # sudo ln -s /opt/node-v13.14.0-linux-x64/bin/npm /usr/bin/npm
+    # sudo ln -s /opt/node-v13.14.0-linux-x64/bin/node /usr/bin/node
+    # sudo ln -s /opt/node-v13.14.0-linux-x64/bin/npx /usr/bin/npx
   install_awscli:
       description: Install AWS CLI 
       steps:

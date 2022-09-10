@@ -27,16 +27,17 @@
     curl -O https://nodejs.org/download/release/v13.8.0/node-v13.8.0-linux-x64.tar.gz
     sudo mkdir -p /usr/local/lib/nodejs
     sudo tar -xvf node-v13.8.0-linux-x64.tar.gz -C /usr/local/lib/nodejs 
-    export PATH=/usr/local/lib/nodejs/node-v13.8.0-linux-x64/bin:$PATH
-    . ~/.profile
-    sudo ln -s /usr/local/lib/nodejs/node-v13.8.0-linux-x64/bin/npm /usr/bin/npm
-    sudo ln -s /usr/local/lib/nodejs/node-v13.8.0-linux-x64/bin/node /usr/bin/node
-    sudo ln -s /usr/local/lib/nodejs/node-v13.8.0-linux-x64/bin/npx /usr/bin/npx
-    sudo npm install -g pm2
+    echo "export PATH=/usr/local/lib/nodejs/node-v13.8.0-linux-x64/bin:$PATH" >> ~/.profile
+    source ~/.profile
+# . ~/.profile
+# sudo ln -s /usr/local/lib/nodejs/node-v13.8.0-linux-x64/bin/npm /usr/bin/npm
+# sudo ln -s /usr/local/lib/nodejs/node-v13.8.0-linux-x64/bin/node /usr/bin/node
+# sudo ln -s /usr/local/lib/nodejs/node-v13.8.0-linux-x64/bin/npx /usr/bin/npx
+# sudo npm install -g pm2
 
 
-# - name: "Install PM2 Globally"
-#   npm:
-#     name: pm2
-#     global: yes
-#     production: yes
+- name: "Install PM2 Globally"
+  npm:
+    name: pm2
+    global: yes
+    production: yes
