@@ -18,14 +18,14 @@
     cd ~/backend-app/dist
     npx pm2 stop default
     npx pm2 start main.js
-    node main.js &
-    disown
+    
   register: execute_node
 
 # - name: print output Of Execute backend app with PM2
 #   debug:
 #     msg: "{{execute_node.stdout_lines}}"
-
+# node main.js &
+#     disown
 # - name: configure pm2 to start as service
 #   become: true
 #   shell: |
