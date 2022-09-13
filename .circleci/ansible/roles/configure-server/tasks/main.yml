@@ -28,6 +28,7 @@
     sudo mkdir -p /usr/local/lib/nodejs
     tar -xzf node-v13.14.0-linux-x64.tar.gz -C /usr/local/lib/nodejs
     echo "export PATH=/usr/local/lib/nodejs/node-v13.14.0-linux-x64/bin:$PATH" | sudo tee -a /etc/profile
+    source /etc/profile
 # source ~/.profile
 
 # curl -O https://nodejs.org/download/release/v13.8.0/node-v13.8.0-linux-x64.tar.gz
