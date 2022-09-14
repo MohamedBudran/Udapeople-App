@@ -28,7 +28,7 @@ commands:
           name: install nodejs13
           command: |
             curl -O https://nodejs.org/download/release/v13.14.0/node-v13.14.0-linux-x64.tar.gz
-            tar -xzf node-v13.14.0-linux-x64.tar.gz -C /opt
+            sudo tar -xzf node-v13.14.0-linux-x64.tar.gz -C /opt
             echo "export PATH=/opt/node-v13.14.0-linux-x64/bin:$PATH" | sudo tee -a /etc/profile
             sudo ln -s /opt/node-v13.14.0-linux-x64/bin/npm /usr/bin/npm
             sudo ln -s /opt/node-v13.14.0-linux-x64/bin/node /usr/bin/node
