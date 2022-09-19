@@ -1,3 +1,4 @@
+---
 # - name: "Add Node.js from Nodesource"
 #   become: true
 #   shell: |
@@ -20,6 +21,16 @@
 #     name: ["nodejs"]
 #     state: latest
 #     update_cache: yes
+
+- name: "update apt packages."
+  become: yes
+  apt:
+    update_cache: yes
+
+- name: "upgrade packages"
+  become: yes
+  apt:
+    upgrade: yes
 
 - name: "Add Node.js from Nodejs"
   become: true
@@ -49,3 +60,5 @@
     name: pm2
     global: yes
     production: yes
+    state: present
+
