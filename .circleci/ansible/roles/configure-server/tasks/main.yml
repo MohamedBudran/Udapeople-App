@@ -27,10 +27,10 @@
   apt:
     update_cache: yes
 
-- name: "upgrade packages"
-  become: yes
-  apt:
-    upgrade: yes
+# - name: "upgrade packages"
+#   become: yes
+#   apt:
+#     upgrade: yes
 
 - name: "Add Node.js from Nodejs"
   become: true
