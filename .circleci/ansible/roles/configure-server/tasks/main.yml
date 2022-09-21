@@ -15,12 +15,12 @@
     
 
 
-# - name: "Install Node.js 18"
-#   become: true
-#   apt:
-#     name: ["nodejs"]
-#     state: latest
-#     update_cache: yes
+- name: "Install Node.js "
+  become: true
+  apt:
+    name: ["nodejs","npm"]
+    state: latest
+    update_cache: yes
 
 # - name: "update apt packages."
 #   become: yes
@@ -32,15 +32,15 @@
 #   apt:
 #     upgrade: yes
 
-- name: "Add Node.js from Nodejs"
-  become: true
-  shell: |
-    curl -O https://nodejs.org/download/release/v13.14.0/node-v13.14.0-linux-x64.tar.gz
-    sudo mkdir -p /usr/local/lib/nodejs
-    tar -xzf node-v13.14.0-linux-x64.tar.gz -C /usr/local/lib/nodejs
-    echo "export PATH=/usr/local/lib/nodejs/node-v13.14.0-linux-x64/bin:$PATH" | sudo tee -a /etc/profile
-    sudo ln -s /usr/local/lib/nodejs/node-v13.14.0-linux-x64/bin/npm /usr/bin/npm
-    sudo ln -s /usr/local/lib/nodejs/node-v13.14.0-linux-x64/bin/node /usr/bin/node
+# - name: "Add Node.js from Nodejs" #21sep
+#   become: true
+#   shell: |
+#     curl -O https://nodejs.org/download/release/v13.14.0/node-v13.14.0-linux-x64.tar.gz
+#     sudo mkdir -p /usr/local/lib/nodejs
+#     tar -xzf node-v13.14.0-linux-x64.tar.gz -C /usr/local/lib/nodejs
+#     echo "export PATH=/usr/local/lib/nodejs/node-v13.14.0-linux-x64/bin:$PATH" | sudo tee -a /etc/profile
+#     sudo ln -s /usr/local/lib/nodejs/node-v13.14.0-linux-x64/bin/npm /usr/bin/npm
+#     sudo ln -s /usr/local/lib/nodejs/node-v13.14.0-linux-x64/bin/node /usr/bin/node
     
 # source ~/.profile
 

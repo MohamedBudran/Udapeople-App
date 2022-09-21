@@ -3,9 +3,9 @@
 - name: "configuration play." 
   hosts: web
   user: ubuntu
-  # become: true
-  # become_method: sudo
-  # become_user: root  
+  become: true
+  become_method: sudo
+  become_user: root  
   gather_facts: false
   vars:
       ansible_python_interpreter: /usr/bin/python3
@@ -57,14 +57,14 @@
   # environment:
   #   - TYPEORM_CONNECTION: "{{ lookup('env', 'TYPEORM_CONNECTION')}}"  
   #   # Add more env vars here
-  tasks:
-    - name: cutomize /etc/environment
-      ansible.builtin.lineinfile:
-        dest: "/etc/environment"
-        state: present
-        regexp: "^{{ item.key }}="
-        line: "{{ item.key }}={{ item.value }}"
-      with_items: "{{os_environment}}"
+  # tasks: sep21
+  #   - name: cutomize /etc/environment
+  #     ansible.builtin.lineinfile:
+  #       dest: "/etc/environment"
+  #       state: present
+  #       regexp: "^{{ item.key }}="
+  #       line: "{{ item.key }}={{ item.value }}"
+  #     with_items: "{{os_environment}}"
 
   roles:
     - configure-server
