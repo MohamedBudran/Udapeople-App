@@ -1,33 +1,41 @@
-- name: Create directory to contains app
+- name: Create app dir
+  become: yes
   file:
-    path: ~/backend-app
+    path: /home/ubuntu/app
     state: directory
 
-- name: Unarchive packages
+- name: "Copy backend build folder to EC2"
+  become: yes
   unarchive:
-    src: artifact.tar.gz
-    dest: ~/backend-app
-    # remote_src: yes  #added
+    src: /tmp/workspace/backend.tar.gz
+    dest: /home/ubuntu/app/
+    owner: ubuntu
 
-- name: Installing node dependencies
-  shell: |
-    cd ~/backend-app
-    npm install
-- name: "Execute backend app with PM2"
-  shell: |
-    cd ~/backend-app/dist
-    sudo ln -s /usr/local/lib/nodejs/node-v13.14.0-linux-x64/bin/pm2 /usr/bin/pm2
-    pm2 start main.js
-    
-  register: execute_node
-# pm2 stop default
+- name: "Copy package.json to EC2"
+  become: yes
+  copy:
+    src: /tmp/workspace/package.json
+    dest: /home/ubuntu/app/
+    owner: ubuntu
 
-- name: print output Of Execute backend app with PM2
-  debug:
-    msg: "{{execute_node.stdout_lines}}"
-# node main.js &
-#     disown
-# - name: configure pm2 to start as service
-#   become: true
-#   shell: |
-#     env PATH=$PATH:/usr/local/bin pm2 startup systemd -u ubuntu --hp /home/ubuntu
+- name: "NPM Install"
+  shell:
+    cmd: npm install --production
+    chdir: /home/ubuntu/app
+
+- name: "Start backend with pm2"
+  become: yes
+  shell: |
+    cd /home/ubuntu/app
+    pm2 start main.js --name app
+  environment:
+    ENVIRONMENT: production
+    TYPEORM_CONNECTION: "{{ lookup('env', 'TYPEORM_CONNECTION') }}"
+    TYPEORM_MIGRATIONS_DIR: "./migrations"
+    TYPEORM_MIGRATIONS: "./migrations/*.js"
+    TYPEORM_ENTITIES: "./modules/domain/**/*.entity.js"
+    TYPEORM_HOST: "{{ lookup('env', 'TYPEORM_HOST') }}"
+    TYPEORM_PORT: "{{ lookup('env', 'TYPEORM_PORT') }}"
+    TYPEORM_USERNAME: "{{ lookup('env', 'TYPEORM_USERNAME') }}"
+    TYPEORM_PASSWORD: "{{ lookup('env', 'TYPEORM_PASSWORD') }}"
+    TYPEORM_DATABASE: "{{ lookup('env', 'TYPEORM_DATABASE') }}"
