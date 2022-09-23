@@ -403,53 +403,48 @@ jobs:
 
   smoke-test:
     docker:
-      # Lightweight Docker image 
-      - image: python:3.7-alpine3.11
+      - image: cimg/aws:2022.06
     steps:
-      # Checkout code from git
-      - checkout 
+      - checkout
+      - install_ansible
+      - install_nodejs13
+      # - run:
+      #     name: Install dependencies
+      #     command: |
+      #       # your code here
       - run:
-          name: Install dependencies
+          name: Get backend url
           command: |
-            # your code here            
-            pip install awscli
-            apk add --update curl nodejs npm
-      - run:
-          name: Backend smoke test.
-          command: |
-            # Fetch and prepare the BACKEND_IP env var
-            export BACKEND_IP = $(aws ec2 describe-instances \
+            BACKEND_AWS_PUBLIC_IP=$(aws ec2 describe-instances \
               --filters "Name=tag:Name,Values=backend-${CIRCLE_WORKFLOW_ID:0:7}" \
               --query 'Reservations[*].Instances[*].PublicIpAddress' \
               --output text)
-            export API_URL="http://${BACKEND_IP}:3030"
+            export API_URL="http://${BACKEND_AWS_PUBLIC_IP}:3030"
             echo "${API_URL}"
-            curl "${API_URL}/api/status"
             if curl "${API_URL}/api/status" | grep "ok"
             then
-              return 0
+                exit 0
             else
-              return 1
-            fi
+                exit 1
+            fi   
+      # - run:
+      #     name: Backend smoke test.
+      #     command: |
+      #       # your code here
       - run:
           name: Frontend smoke test.
           command: |
-            # your code here
-            echo ${CIRCLE_WORKFLOW_ID:0:7}
-            echo ${CIRCLE_WORKFLOW_ID:0:7}
-            URL="http://udapeople-${CIRCLE_WORKFLOW_ID:0:7}.s3-website.eu-central-1.amazonaws.com/#/employees"            
-            curl -s http://udapeople-${CIRCLE_WORKFLOW_ID:0:7}.s3-website.eu-central-1.amazonaws.com/#/employees | grep "Welcome"
+            URL="http://udapeople-${CIRCLE_WORKFLOW_ID:0:7}.s3-website-${AWS_DEFAULT_REGION}.amazonaws.com/#/employees"            
             echo ${URL} 
-            if curl -s http://udapeople-${CIRCLE_WORKFLOW_ID:0:7}.s3-website.eu-central-1.amazonaws.com/#/employees | grep "Welcome"
+            if curl -s ${URL} | grep "Welcome"
             then
-                # Change this to 0 after the job fails
-              return 0
+              exit 0
             else
-              return 1
+              exit 1
             fi
       # Here's where you will add some code to rollback on failure  
-      - revert-migrations
-      - destroy-environment 
+      - destroy-environment
+      - revert-migrations    
       
 
   cloudfront-update:
