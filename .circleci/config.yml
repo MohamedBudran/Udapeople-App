@@ -406,8 +406,8 @@ jobs:
       - image: cimg/aws:2022.06
     steps:
       - checkout
-      - install_ansible
-      - install_nodejs13
+      # - install_ansible
+      # - install_nodejs13
       # - run:
       #     name: Install dependencies
       #     command: |
