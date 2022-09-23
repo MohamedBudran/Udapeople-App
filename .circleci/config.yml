@@ -27,11 +27,16 @@ commands:
       - run:
           name: install nodejs13
           command: |
-            curl -O https://nodejs.org/download/release/v13.14.0/node-v13.14.0-linux-x64.tar.gz
-            sudo tar -xzf node-v13.14.0-linux-x64.tar.gz -C /opt
-            echo "export PATH=/opt/node-v13.14.0-linux-x64/bin:$PATH" | sudo tee -a /etc/profile
-            sudo ln -s /opt/node-v13.14.0-linux-x64/bin/npm /usr/bin/npm
-            sudo ln -s /opt/node-v13.14.0-linux-x64/bin/node /usr/bin/node
+            curl -sL https://deb.nodesource.com/setup_lts.x | sudo -E bash -
+            sudo apt install -y nodejs
+            sudo npm install --global n
+            sudo n 13.8.0
+
+    # curl -O https://nodejs.org/download/release/v13.14.0/node-v13.14.0-linux-x64.tar.gz
+    # sudo tar -xzf node-v13.14.0-linux-x64.tar.gz -C /opt
+    # echo "export PATH=/opt/node-v13.14.0-linux-x64/bin:$PATH" | sudo tee -a /etc/profile
+    # sudo ln -s /opt/node-v13.14.0-linux-x64/bin/npm /usr/bin/npm
+    # sudo ln -s /opt/node-v13.14.0-linux-x64/bin/node /usr/bin/node
     # sudo ln -s /opt/node-v13.14.0-linux-x64/bin/npm /usr/bin/npm
     # sudo ln -s /opt/node-v13.14.0-linux-x64/bin/node /usr/bin/node
     # sudo ln -s /opt/node-v13.14.0-linux-x64/bin/npx /usr/bin/npx
